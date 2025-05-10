@@ -10,10 +10,10 @@ public class ProjectManagementApp {
     public void createProject(String string){
         projects.add(new Project(string));
     }
+    public boolean containsProject(String projectName){
+        return projects.stream().anyMatch(p->p.getName().equals(projectName));
+    }
 
 }
 
 
-public boolean containsProject(String projectName){
-    return projects.stream().anyMatch(p->p.getName().equals(projectName));
-}
