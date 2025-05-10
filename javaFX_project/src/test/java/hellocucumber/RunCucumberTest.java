@@ -9,12 +9,14 @@ import org.junit.platform.suite.api.ConfigurationParameter;
 import org.junit.platform.suite.api.IncludeEngines;
 import org.junit.platform.suite.api.SelectPackages;
 import org.junit.platform.suite.api.Suite;
+import org.junit.platform.suite.api.SuiteDisplayName;
 
 @Suite
+@SuiteDisplayName("Cucumber Tests")
 @IncludeEngines("cucumber")
 @SelectPackages("hellocucumber")
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "summary")
-@ConfigurationParameter(key = FEATURES_PROPERTY_NAME, value = "features")
+@ConfigurationParameter(key = FEATURES_PROPERTY_NAME, value = "classpath:features")  // <-- matches folder name
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "hellocucumber")
 @ConfigurationParameter(key = SNIPPET_TYPE_PROPERTY_NAME, value = "camelcase")
 public class RunCucumberTest {

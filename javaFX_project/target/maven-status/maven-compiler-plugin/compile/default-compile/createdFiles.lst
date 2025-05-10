@@ -1,4 +1,10 @@
-dtu/example/ui/App.class
+app/Employee.class
+app/Activity.class
 module-info.class
 dtu/example/ui/SecondaryController.class
+app/Project.class
+dtu/example/ui/App.class
+app/AbsenceType.class
 dtu/example/ui/PrimaryController.class
+app/SystemModel.class
+app/Absence.class
