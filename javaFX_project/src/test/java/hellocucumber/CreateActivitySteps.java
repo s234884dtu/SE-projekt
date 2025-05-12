@@ -15,6 +15,16 @@ public class CreateActivitySteps {
         project.createActivity(activityName, startWeek, endWeek, budgetedHours, CommonSteps.employee);
     }
 
+    @When("{string} adds an activity named {string} with start week {int}, end week {int}, and {int} budgeted hours to {string}")
+    public void employeeAddsActivity(String employeeInitials, String activityName, int startWeek, int endWeek, int budgetedHours, String projectName) {
+        Employee actor = CommonSteps.system.getEmployee(employeeInitials);
+        if (actor == null) {
+            throw new IllegalArgumentException("Employee " + employeeInitials + " not found.");
+        }
+        Project project = CommonSteps.system.getProject(projectName);
+        project.createActivity(activityName, startWeek, endWeek, budgetedHours, actor);
+    }
+
     @Then("the project {string} has an activity named {string}")
     public void theProjectHasAnActivity(String projectName, String activityName) {
         Project proj = CommonSteps.system.getProject(projectName);

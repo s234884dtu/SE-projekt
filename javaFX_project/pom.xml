@@ -92,9 +92,6 @@
 				<version>3.5.1</version>
 				<configuration>
 					<properties>
-						<!-- Work around. Surefire does not include enough
-                             information to disambiguate between different
-                             examples and scenarios. -->
 						<configurationParameters>
 							cucumber.junit-platform.naming-strategy=long
 						</configurationParameters>
@@ -112,7 +109,7 @@
 			<plugin>
   <groupId>org.jacoco</groupId>
   <artifactId>jacoco-maven-plugin</artifactId>
-  <version>0.8.11</version>
+  <version>0.8.12</version>
   <executions>
     <execution>
       <id>prepare-agent</id>
