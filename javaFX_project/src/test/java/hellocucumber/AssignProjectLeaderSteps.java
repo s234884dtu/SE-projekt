@@ -5,11 +5,13 @@ import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class AssignProjectLeaderSteps {
-    @When("I assign {string} as the project leader of {string}")
-    public void iAssignAsProjectLeader(String initials, String projectName) {
+
+    @When("{string} assigns {string} as the project leader of {string}")
+    public void assignProjectLeader(String actorInitials, String newLeaderInitials, String projectName) {
         Project proj = CommonSteps.system.getProject(projectName);
-        Employee emp = CommonSteps.system.getEmployee(initials);
-        proj.setProjectLeader(emp);
+        Employee actor = CommonSteps.system.getEmployee(actorInitials);
+        Employee newLeader = CommonSteps.system.getEmployee(newLeaderInitials);
+        proj.assignProjectLeader(actor, newLeader);
     }
 
     @Then("{string} is the project leader of {string}")

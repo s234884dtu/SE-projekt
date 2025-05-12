@@ -8,9 +8,9 @@ public class Employee {
     private final List<Absence> registeredAbsences = new ArrayList<>();
 
     public Employee(String initials) {
-        if (initials.length() != 4) {
-            throw new IllegalArgumentException("Initials must be exactly 4 characters.");
-        }
+        if (initials.length() < 1 || initials.length() > 4) {
+            throw new IllegalArgumentException("Initials must be 1 to 4 characters.");
+        }        
         this.initials = initials;
     }
 

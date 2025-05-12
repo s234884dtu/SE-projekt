@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+javaFX_project,app,Employee,12,55,2,2,2,15,3,7,1,7
+javaFX_project,app,Project,9,67,0,0,3,18,2,9,2,9
+javaFX_project,app,SystemModel,24,73,2,2,4,16,4,7,2,7
+javaFX_project,app,Absence,0,15,0,0,0,6,0,3,0,3
+javaFX_project,app,AbsenceType,0,21,0,0,0,4,0,1,0,1
+javaFX_project,app,Activity,24,90,2,2,7,21,7,8,5,8
+javaFX_project,app,CLIApp,408,0,17,0,75,0,17,0,3,0
+javaFX_project,dtu.example.ui,App,38,0,0,0,11,0,5,0,5,0
+javaFX_project,dtu.example.ui,PrimaryController,6,0,0,0,3,0,2,0,2,0
+javaFX_project,dtu.example.ui,SecondaryController,6,0,0,0,3,0,2,0,2,0

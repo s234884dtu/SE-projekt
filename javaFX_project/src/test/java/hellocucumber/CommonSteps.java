@@ -31,14 +31,19 @@ public class CommonSteps {
     }
 
     @Given("an activity named {string} in the project {string}")
-    public void anActivityNamedInProject(String activityName, String projectName) {
-        aProjectNamed(projectName);
-        Activity a = project.findActivity(activityName);
-        if (a == null) {
-            a = project.createActivity(activityName);
+public void anActivityNamedInProject(String activityName, String projectName) {
+    aProjectNamed(projectName);
+    Activity a = project.findActivity(activityName);
+    if (a == null) {
+        if (employee == null) {
+            throw new IllegalStateException("An employee must be set before creating an activity.");
         }
-        activity = a;
+        a = project.createActivity(activityName, 1, 2, 10, employee);
     }
+    activity = a;
+}
+
+
 
     @Given("the employee {string} is assigned to the activity {string}")
     public void theEmployeeIsAssignedToTheActivity(String initials, String activityName) {

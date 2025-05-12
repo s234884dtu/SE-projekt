@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SystemModel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">javaFX_project</a> &gt; <a href="index.source.html" class="el_package">app</a> &gt; <span class="el_source">SystemModel.java</span></div><h1>SystemModel.java</h1><pre class="source lang-java linenums">package app;
+
+import java.util.*;
+
+<span class="fc" id="L5">public class SystemModel {</span>
+<span class="fc" id="L6">    private final Map&lt;String, Employee&gt; employees = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L7">    private final Map&lt;String, Project&gt; projects = new HashMap&lt;&gt;();</span>
+
+    public Employee createEmployee(String initials) {
+<span class="pc bpc" id="L10" title="1 of 2 branches missed.">        if (employees.containsKey(initials)) {</span>
+<span class="nc" id="L11">            throw new IllegalArgumentException(&quot;Employee already exists.&quot;);</span>
+        }
+<span class="fc" id="L13">        Employee e = new Employee(initials);</span>
+<span class="fc" id="L14">        employees.put(initials, e);</span>
+<span class="fc" id="L15">        return e;</span>
+    }
+
+    public Project createProject(String name) {
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if (projects.containsKey(name)) {</span>
+<span class="nc" id="L20">            throw new IllegalArgumentException(&quot;Project name already in use.&quot;);</span>
+        }
+<span class="fc" id="L22">        Project p = new Project(name);</span>
+<span class="fc" id="L23">        projects.put(name, p);</span>
+<span class="fc" id="L24">        return p;</span>
+    }
+
+    public Employee getEmployee(String initials) {
+<span class="fc" id="L28">        return employees.get(initials);</span>
+    }
+
+    public Project getProject(String name) {
+<span class="fc" id="L32">        return projects.get(name);</span>
+    }
+
+    public List&lt;Employee&gt; getAllEmployees() {
+<span class="nc" id="L36">        return new ArrayList&lt;&gt;(employees.values());</span>
+    }
+
+    public List&lt;Project&gt; getAllProjects() {
+<span class="nc" id="L40">        return new ArrayList&lt;&gt;(projects.values());</span>
+    }
+
+    public List&lt;Employee&gt; getAvailableEmployees() {
+        // Available = not currently assigned to any activity
+<span class="fc" id="L45">        return employees.values().stream()</span>
+<span class="fc" id="L46">            .filter(e -&gt; e.getAssignedActivities().isEmpty())</span>
+<span class="fc" id="L47">            .toList();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

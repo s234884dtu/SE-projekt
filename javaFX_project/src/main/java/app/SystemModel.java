@@ -6,6 +6,24 @@ public class SystemModel {
     private final Map<String, Employee> employees = new HashMap<>();
     private final Map<String, Project> projects = new HashMap<>();
 
+    private Employee signedInUser = null;
+
+    public void signIn(String initials) {
+        Employee user = getEmployee(initials);
+        if (user == null) {
+            throw new IllegalArgumentException("No employee with initials '" + initials + "' exists.");
+        }
+        signedInUser = user;
+    }
+
+    public void signOut() {
+        signedInUser = null;
+    }
+
+    public Employee getSignedInUser() {
+        return signedInUser;
+    }
+
     public Employee createEmployee(String initials) {
         if (employees.containsKey(initials)) {
             throw new IllegalArgumentException("Employee already exists.");

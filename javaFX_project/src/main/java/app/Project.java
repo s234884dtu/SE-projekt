@@ -15,12 +15,12 @@ public class Project {
         return name;
     }
 
-    public void setProjectLeader(Employee leader) {
-        this.projectLeader = leader;
-    }
-
     public Employee getProjectLeader() {
         return projectLeader;
+    }
+
+    public List<Activity> getActivities() {
+        return activities;
     }
 
     public void addActivity(Activity activity) {
@@ -34,18 +34,51 @@ public class Project {
             .orElse(null);
     }
 
-    public List<Activity> getActivities() {
-        return activities;
+    public void assignEmployeeToActivity(String activityName, Employee actor, Employee target) {
+        if (hasLeader() && !isLeader(actor)) {
+            throw new SecurityException("Only the project leader can assign employees.");
+        }
+        Activity activity = findActivity(activityName);
+        if (activity == null) {
+            throw new IllegalArgumentException("Activity not found: " + activityName);
+        }
+        activity.assignEmployee(target);
     }
+    
 
     public int getTotalWorkHours() {
         return activities.stream()
-            .mapToInt(a -> a.getAllWorkHours().values().stream().mapToInt(Integer::intValue).sum())
+            .mapToInt(a -> a.getAllWorkHours().values().stream().mapToInt(Double::intValue).sum())
             .sum();
     }
-    public Activity createActivity(String activityName) {
-        Activity activity = new Activity(activityName);
+
+    public Activity createActivity(String activityName, int startWeek, int endWeek, int budgetedHours, Employee actor) {
+        if (hasLeader() && !isLeader(actor)) {
+            throw new SecurityException("Only the project leader can create activities.");
+        }
+        Activity activity = new Activity(activityName, startWeek, endWeek, budgetedHours);
         activities.add(activity);
         return activity;
+    }
+
+    public boolean isLeader(Employee employee) {
+        return employee.equals(projectLeader);
+    }
+
+    public boolean hasLeader() {
+        return projectLeader != null;
+    }
+
+    //public boolean isEmployeeAssigned(Employee employee) {
+    //    return activities.stream()
+    //        .flatMap(a -> a.getAssignedEmployees().stream())
+    //        .anyMatch(emp -> emp.equals(employee));
+    //}
+
+    public void assignProjectLeader(Employee actor, Employee newLeader) {
+    //    if (!isEmployeeAssigned(newLeader)) {
+    //        throw new IllegalArgumentException("The new project leader must already be assigned to the project.");
+    //    }
+        this.projectLeader = newLeader;
     }
 }
