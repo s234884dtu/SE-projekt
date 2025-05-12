@@ -93,6 +93,8 @@ public class Project {
         if (newLeader == null) {
             throw new IllegalArgumentException("Cannot assign project leader: employee does not exist.");
         } 
+
+        
         this.projectLeader = newLeader;
     }
     

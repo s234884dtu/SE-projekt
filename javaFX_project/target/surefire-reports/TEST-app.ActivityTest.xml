@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="hellocucumber.RunCucumberTest" time="0.658" tests="10" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="app.ActivityTest" time="0.093" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="23"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -59,14 +59,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="67.0"/>
   </properties>
-  <testcase name="Assign employee to activity - Add an employee to an activity" classname="Assign employee to activity" time="0.233"/>
-  <testcase name="Assign project leader - Assign a project leader to a project" classname="Assign project leader" time="0.025"/>
-  <testcase name="Create activity with details - Add an activity with details" classname="Create activity with details" time="0.028"/>
-  <testcase name="Create employee - Create employee with 4-letter initials" classname="Create employee" time="0.011"/>
-  <testcase name="Create project - Create project with a unique name" classname="Create project" time="0.009"/>
-  <testcase name="Register absence - Register vacation for an employee" classname="Register absence" time="0.014"/>
-  <testcase name="Register work hours - Employee registers hours on an activity" classname="Register work hours" time="0.011"/>
-  <testcase name="Remove employee from activity - Remove an assigned employee from an activity" classname="Remove employee from activity" time="0.013"/>
-  <testcase name="View project report - View total hours worked in a project" classname="View project report" time="0.028"/>
-  <testcase name="View available employees - List employees with no assigned activities" classname="View available employees" time="0.01"/>
+  <testcase name="registerValidTwoAndHalfHours" classname="app.ActivityTest" time="0.043"/>
+  <testcase name="registerValidWholeHour" classname="app.ActivityTest" time="0.002"/>
+  <testcase name="registerValidHalfHour" classname="app.ActivityTest" time="0.002"/>
+  <testcase name="registerNegativeHoursThrows" classname="app.ActivityTest" time="0.005"/>
+  <testcase name="registerNonHalfIncrementThrows" classname="app.ActivityTest" time="0.002"/>
+  <testcase name="registerZeroHoursThrows" classname="app.ActivityTest" time="0.002"/>
 </testsuite>

@@ -52,7 +52,11 @@ public class Activity {
         if (hours <= 0 || hours % 0.5 != 0) {
             throw new IllegalArgumentException("Hours must be in 0.5 increments and greater than 0.");
         }
-        workHours.put(employee, workHours.getOrDefault(employee, 0.0) + hours);
+
+        double previousHours = workHours.getOrDefault(employee, 0.0);
+        workHours.put(employee, previousHours + hours); 
+        assert Math.abs(workHours.get(employee) - (previousHours + hours)) < 0.0001 
+            : "Registered hours should be correctly added.";
     }
 
     public double getHoursFor(Employee employee) {
