@@ -1,6 +1,6 @@
 Feature: Register absence
 
-  Scenario: Register vacation hours for an employee
+  Scenario: Register vacation for an employee
     Given an employee with initials "JD01"
-    When I register 8 hours of VACATION for "JD01"
-    Then "JD01" has 8 hours of VACATION absence
+    When I register VACATION absence for "JD01" from "2025-07-01" to "2025-07-05"
+    Then "JD01" has a VACATION absence from "2025-07-01" to "2025-07-05"

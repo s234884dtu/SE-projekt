@@ -35,11 +35,8 @@ public class SystemModel {
     }
 
     public Project createProject(String name) {
-        //if (projects.containsKey(name)) {
-        //    throw new IllegalArgumentException("Project name already in use.");
-        //}
-        String id = generateProjectId();  // new line
-        Project p = new Project(id, name);  // updated constructor
+        String id = generateProjectId();  
+        Project p = new Project(id, name);
         projects.put(name, p);
         return p;
     }

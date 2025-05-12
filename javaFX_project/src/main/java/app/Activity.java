@@ -1,46 +1,48 @@
 package app;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Activity {
     private final String name;
     private final Map<Employee, Double> workHours = new HashMap<>();
     private final Set<Employee> assignedEmployees = new HashSet<>();
-    private int startWeek; 
-    private int endWeek; 
-    private int budgetedHours;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private double budgetedHours;
 
-    public Activity(String name) {
-        this(name, 0, 0, 0); // fallback to empty weeks and 0 budget
-    }    
-
-    public int getStartWeek() {
-        return startWeek;
+    public Activity(String name, LocalDate startDate, LocalDate endDate, double budgetedHours) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.budgetedHours = budgetedHours;
     }
-    
-    public int getEndWeek() {
-        return endWeek;
-    }
-    
-    public int getBudgetedHours() {
-        return budgetedHours;
-    }
-    
 
     public String getName() {
         return name;
-    } 
+    }
 
-    public void removeEmployee(Employee employee) {
-        assignedEmployees.remove(employee);
-        employee.removeFromActivity(this);
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public double getBudgetedHours() {
+        return budgetedHours;
     }
 
     public void assignEmployee(Employee employee) {
         assignedEmployees.add(employee);
         employee.assignToActivity(this);
     }
-    
+
+    public void removeEmployee(Employee employee) {
+        assignedEmployees.remove(employee);
+        employee.removeFromActivity(this);
+    }
 
     public boolean isEmployeeAssigned(Employee employee) {
         return assignedEmployees.contains(employee);
@@ -64,12 +66,4 @@ public class Activity {
     public Set<Employee> getAssignedEmployees() {
         return assignedEmployees;
     }
-
-    public Activity(String name, int startWeek, int endWeek, int budgetedHours) { 
-        this.name = name; 
-        this.startWeek = startWeek; 
-        this.endWeek = endWeek; 
-        this.budgetedHours = budgetedHours; 
-    }
-
 }

@@ -1,19 +1,33 @@
 package app;
 
+import java.time.LocalDate;
+
 public class Absence {
     private final AbsenceType type;
-    private final int hours;
+    private final LocalDate startDate;
+    private final LocalDate endDate;
 
-    public Absence(AbsenceType type, int hours) {
+    public Absence(AbsenceType type, LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("Start date must be before or equal to end date.");
+        }
+        
         this.type = type;
-        this.hours = hours;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public AbsenceType getType() {
         return type;
     }
 
-    public int getHours() {
-        return hours;
+    public LocalDate getStartDate() {
+        return startDate;
     }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    
 }

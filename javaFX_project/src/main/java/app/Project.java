@@ -1,5 +1,6 @@
 package app;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Project {
@@ -52,20 +53,33 @@ public class Project {
     }
     
 
-    public int getTotalWorkHours() {
+    public double getTotalWorkHours() {
         return activities.stream()
-            .mapToInt(a -> a.getAllWorkHours().values().stream().mapToInt(Double::intValue).sum())
+            .flatMap(a -> a.getAllWorkHours().values().stream())
+            .mapToDouble(Double::doubleValue)
             .sum();
     }
 
-    public Activity createActivity(String activityName, int startWeek, int endWeek, int budgetedHours, Employee actor) {
+    public double getTotalBudgetedHours() {
+        return activities.stream()
+            .mapToDouble(Activity::getBudgetedHours)
+            .sum();
+    }    
+
+    public String generateProjectHoursReport() {
+        double registered = getTotalWorkHours();
+        double budgeted = getTotalBudgetedHours();
+        return String.format("Project %s (%s): %.1f hours used of %.1f budgeted", name, id, registered, budgeted);
+    }
+
+    public Activity createActivity(String name, LocalDate startDate, LocalDate endDate, double budgetedHours, Employee actor) {
         if (hasLeader() && !isLeader(actor)) {
             throw new SecurityException("Only the project leader can create activities.");
         }
-        Activity activity = new Activity(activityName, startWeek, endWeek, budgetedHours);
+        Activity activity = new Activity(name, startDate, endDate, budgetedHours);
         activities.add(activity);
         return activity;
-    }
+    }  
 
     public boolean isLeader(Employee employee) {
         return employee.equals(projectLeader);

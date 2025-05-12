@@ -2,6 +2,7 @@ package app;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.List;
 
 public class CLIApp {
@@ -36,11 +37,11 @@ public class CLIApp {
                               create-employee <initials>
                               create-project <name>
                               assign-leader <initials> <project>
-                              add-activity <activity> <startWeek> <endWeek> <budgetedHours> <project>
+                              add-activity <activity> <start:yyyy-MM-dd> <end:yyyy-MM-dd> <budgetedHours> <project>
                               assign-employee <initials> <activity> <project>
                               remove-employee <initials> <activity> <project>
                               register-hours <initials> <hours> <activity> <project>
-                              register-absence <initials> <type> <hours>
+                              register-absence-period <initials> <type> <start:yyyy-MM-dd> <end:yyyy-MM-dd>
                               view-report <project>
                               list-available
                               help / exit
@@ -85,17 +86,19 @@ public class CLIApp {
                     case "add-activity": {
                         requireSignIn(sys);
                         String actName = parts[1];
-                        int startWeek = Integer.parseInt(parts[2]);
-                        int endWeek = Integer.parseInt(parts[3]);
-                        int budgetedHours = Integer.parseInt(parts[4]);
+                        LocalDate startDate = LocalDate.parse(parts[2]);
+                        LocalDate endDate = LocalDate.parse(parts[3]);
+                        double budgetedHours = Double.parseDouble(parts[4]);
                         String projName = parts[5];
                         Project projectToAddActivity = sys.getProject(projName);
                         Activity newActivity = projectToAddActivity.createActivity(
-                                actName, startWeek, endWeek, budgetedHours, sys.getSignedInUser());
-                        System.out.printf("Added activity %s to %s (weeks %d–%d, %d budgeted hours)%n",
-                                actName, projName, startWeek, endWeek, budgetedHours);
+                                actName, startDate, endDate, budgetedHours, sys.getSignedInUser());
+                        System.out.printf("Added activity %s to %s (from %s to %s, %.1f budgeted hours)%n",
+                                actName, projName, startDate, endDate, budgetedHours);
                         break;
                     }
+                    
+                    
 
                     case "assign-employee": {
                         requireSignIn(sys);
@@ -129,16 +132,22 @@ public class CLIApp {
                         System.out.printf("%s logged %.1f hours on %s%n", ini, hrs, actName);
                         break;
                     }
-
-                    case "register-absence": {
+                    case "register-absence-period": {
                         requireSignIn(sys);
-                        String ini = parts[1], type = parts[2], h = parts[3];
-                        int hrsAbs = Integer.parseInt(h);
-                        sys.getEmployee(ini).registerAbsence(
-                                AbsenceType.valueOf(type.toUpperCase()), hrsAbs);
-                        System.out.printf("%s registered %d hours of %s%n", ini, hrsAbs, type);
+                        if (parts.length < 5) {
+                            throw new IllegalArgumentException("Usage: register-absence-period <initials> <type> <start:yyyy-MM-dd> <end:yyyy-MM-dd>");
+                        }
+                    
+                        String ini = parts[1];
+                        AbsenceType type = AbsenceType.valueOf(parts[2].toUpperCase());
+                        LocalDate start = LocalDate.parse(parts[3]);
+                        LocalDate end = LocalDate.parse(parts[4]);
+                    
+                        Employee emp = sys.getEmployee(ini);
+                        emp.registerAbsence(type, start, end);
+                        System.out.printf("Registered %s absence for %s from %s to %s%n", type, ini, start, end);
                         break;
-                    }
+                    }                    
 
                     case "view-report": {
                         requireSignIn(sys);
@@ -147,10 +156,9 @@ public class CLIApp {
                         if (projectToView.hasLeader() && !projectToView.isLeader(sys.getSignedInUser())) {
                             throw new SecurityException("Only the project leader can view the report.");
                         }
-                        int total = projectToView.getTotalWorkHours();
-                        System.out.printf("Total hours for %s: %d%n", projName, total);
+                        System.out.println(projectToView.generateProjectHoursReport());
                         break;
-                    }
+                    }                    
 
                     case "list-available": {
                         requireSignIn(sys);

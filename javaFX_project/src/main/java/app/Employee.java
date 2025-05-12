@@ -1,5 +1,6 @@
 package app;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class Employee {
@@ -30,15 +31,11 @@ public class Employee {
         return assignedActivities;
     }
 
-    public void registerAbsence(AbsenceType type, int hours) {
-        registeredAbsences.add(new Absence(type, hours));
+    public void registerAbsence(AbsenceType type, LocalDate start, LocalDate end) {
+        registeredAbsences.add(new Absence(type, start, end));
     }
 
     public List<Absence> getAbsences() {
         return registeredAbsences;
-    }
-
-    public int getTotalAbsenceHours() {
-        return registeredAbsences.stream().mapToInt(Absence::getHours).sum();
-    }
+    }  
 }
