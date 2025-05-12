@@ -1,11 +1,5 @@
 package app;
 
-import app.SystemModel;
-import app.Project;
-import app.Activity;
-import app.Employee;
-import app.AbsenceType;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -18,7 +12,7 @@ public class CLIApp {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
 
-        System.out.println("Welcome to the Project management and Time-Tracking CLI. Type 'help' for commands.");
+        System.out.println("Welcome to the Project Management and Time-Tracking CLI. Type 'help' for commands.");
         while (true) {
             System.out.print("> ");
             line = in.readLine();
@@ -60,11 +54,9 @@ public class CLIApp {
 
                     case "whoami":
                         Employee current = sys.getSignedInUser();
-                        if (current == null) {
-                            System.out.println("No user is currently signed in.");
-                        } else {
-                            System.out.println("You are signed in as: " + current.getInitials());
-                        }
+                        System.out.println(current == null
+                                ? "No user is currently signed in."
+                                : "You are signed in as: " + current.getInitials());
                         break;
 
                     case "create-employee":
@@ -75,17 +67,17 @@ public class CLIApp {
 
                     case "create-project":
                         requireSignIn(sys);
-                        sys.createProject(parts[1]);
-                        System.out.println("Created project: " + parts[1]);
+                        Project createdProject = sys.createProject(parts[1]);
+                        System.out.printf("Created project: %s (%s)%n", createdProject.getName(), createdProject.getId());
                         break;
 
                     case "assign-leader": {
                         requireSignIn(sys);
                         String ini = parts[1], projName = parts[2];
-                        Project p = sys.getProject(projName);
+                        Project projectToAssignLeader = sys.getProject(projName);
                         Employee actor = sys.getSignedInUser();
                         Employee newLeader = sys.getEmployee(ini);
-                        p.assignProjectLeader(actor, newLeader);
+                        projectToAssignLeader.assignProjectLeader(actor, newLeader);
                         System.out.printf("Assigned %s as leader of %s%n", ini, projName);
                         break;
                     }
@@ -97,20 +89,21 @@ public class CLIApp {
                         int endWeek = Integer.parseInt(parts[3]);
                         int budgetedHours = Integer.parseInt(parts[4]);
                         String projName = parts[5];
-                        Project p = sys.getProject(projName);
-                        Activity a = p.createActivity(actName, startWeek, endWeek, budgetedHours, sys.getSignedInUser());
-                        System.out.printf("Added activity %s to %s (weeks %d–%d, %d budgeted hours)%n", actName, projName, startWeek, endWeek, budgetedHours);
+                        Project projectToAddActivity = sys.getProject(projName);
+                        Activity newActivity = projectToAddActivity.createActivity(
+                                actName, startWeek, endWeek, budgetedHours, sys.getSignedInUser());
+                        System.out.printf("Added activity %s to %s (weeks %d–%d, %d budgeted hours)%n",
+                                actName, projName, startWeek, endWeek, budgetedHours);
                         break;
                     }
 
                     case "assign-employee": {
                         requireSignIn(sys);
                         String ini = parts[1], actName = parts[2], projName = parts[3];
-                        Project p = sys.getProject(projName);
+                        Project projectToAssignEmployee = sys.getProject(projName);
                         Employee actor = sys.getSignedInUser();
                         Employee target = sys.getEmployee(ini);
-                        p.assignEmployeeToActivity(actName, actor, target);
-                        System.out.printf("Assigned %s to activity %s%n", ini, actName);
+                        projectToAssignEmployee.assignEmployeeToActivity(actName, actor, target);
                         System.out.printf("Assigned %s to activity %s%n", ini, actName);
                         break;
                     }
@@ -118,20 +111,21 @@ public class CLIApp {
                     case "remove-employee": {
                         requireSignIn(sys);
                         String ini = parts[1], actName = parts[2], projName = parts[3];
-                        Project p = sys.getProject(projName);
-                        Activity a = p.findActivity(actName);
-                        a.removeEmployee(sys.getEmployee(ini));
+                        Project projectToRemoveFrom = sys.getProject(projName);
+                        Activity activity = projectToRemoveFrom.findActivity(actName);
+                        activity.removeEmployee(sys.getEmployee(ini));
                         System.out.printf("Removed %s from activity %s%n", ini, actName);
                         break;
                     }
 
                     case "register-hours": {
                         requireSignIn(sys);
-                        String ini = parts[1], actName = parts[3], projName = parts[4];
+                        String ini = parts[1];
                         double hrs = Double.parseDouble(parts[2]);
-                        Project p = sys.getProject(projName);
-                        Activity a = p.findActivity(actName);
-                        a.registerHours(sys.getEmployee(ini), hrs);
+                        String actName = parts[3], projName = parts[4];
+                        Project projectToRegisterHours = sys.getProject(projName);
+                        Activity activity = projectToRegisterHours.findActivity(actName);
+                        activity.registerHours(sys.getEmployee(ini), hrs);
                         System.out.printf("%s logged %.1f hours on %s%n", ini, hrs, actName);
                         break;
                     }
@@ -141,7 +135,7 @@ public class CLIApp {
                         String ini = parts[1], type = parts[2], h = parts[3];
                         int hrsAbs = Integer.parseInt(h);
                         sys.getEmployee(ini).registerAbsence(
-                            AbsenceType.valueOf(type.toUpperCase()), hrsAbs);
+                                AbsenceType.valueOf(type.toUpperCase()), hrsAbs);
                         System.out.printf("%s registered %d hours of %s%n", ini, hrsAbs, type);
                         break;
                     }
@@ -149,11 +143,11 @@ public class CLIApp {
                     case "view-report": {
                         requireSignIn(sys);
                         String projName = parts[1];
-                        Project p = sys.getProject(projName);
-                        if (p.hasLeader() && !p.isLeader(sys.getSignedInUser())) {
+                        Project projectToView = sys.getProject(projName);
+                        if (projectToView.hasLeader() && !projectToView.isLeader(sys.getSignedInUser())) {
                             throw new SecurityException("Only the project leader can view the report.");
                         }
-                        int total = p.getTotalWorkHours();
+                        int total = projectToView.getTotalWorkHours();
                         System.out.printf("Total hours for %s: %d%n", projName, total);
                         break;
                     }

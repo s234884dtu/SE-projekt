@@ -5,6 +5,7 @@ import java.util.*;
 public class SystemModel {
     private final Map<String, Employee> employees = new HashMap<>();
     private final Map<String, Project> projects = new HashMap<>();
+    private int løbenummerCounter = 1;
 
     private Employee signedInUser = null;
 
@@ -34,12 +35,18 @@ public class SystemModel {
     }
 
     public Project createProject(String name) {
-        if (projects.containsKey(name)) {
-            throw new IllegalArgumentException("Project name already in use.");
-        }
-        Project p = new Project(name);
+        //if (projects.containsKey(name)) {
+        //    throw new IllegalArgumentException("Project name already in use.");
+        //}
+        String id = generateProjectId();  // new line
+        Project p = new Project(id, name);  // updated constructor
         projects.put(name, p);
         return p;
+    }
+
+    private String generateProjectId() {
+        int year = 2000 + Calendar.getInstance().get(Calendar.YEAR) % 100;  // 25 for 2025
+        return String.format("%02d%03d", year, løbenummerCounter++);
     }
 
     public Employee getEmployee(String initials) {

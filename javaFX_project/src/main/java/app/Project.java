@@ -4,15 +4,21 @@ import java.util.*;
 
 public class Project {
     private final String name;
+    private final String id;
     private Employee projectLeader;
     private final List<Activity> activities = new ArrayList<>();
 
-    public Project(String name) {
+    public Project(String id, String name) {
+        this.id = id;
         this.name = name;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public Employee getProjectLeader() {
@@ -69,16 +75,13 @@ public class Project {
         return projectLeader != null;
     }
 
-    //public boolean isEmployeeAssigned(Employee employee) {
-    //    return activities.stream()
-    //        .flatMap(a -> a.getAssignedEmployees().stream())
-    //        .anyMatch(emp -> emp.equals(employee));
-    //}
-
     public void assignProjectLeader(Employee actor, Employee newLeader) {
-    //    if (!isEmployeeAssigned(newLeader)) {
-    //        throw new IllegalArgumentException("The new project leader must already be assigned to the project.");
-    //    }
         this.projectLeader = newLeader;
     }
+    
+    @Override
+    public String toString() {
+        return id + " - " + name;
+    }
+
 }
