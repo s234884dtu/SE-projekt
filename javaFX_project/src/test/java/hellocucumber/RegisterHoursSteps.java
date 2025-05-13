@@ -4,6 +4,10 @@ import app.*;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Peter
+ * Cucumber steps for registering and verifying work hours on activities.
+ */
 public class RegisterHoursSteps {
     @When("the employee {string} registers {double} hours on the activity {string}")
     public void the_employee_registers_hours_on_the_activity(String initials, Double hours, String activityName) {

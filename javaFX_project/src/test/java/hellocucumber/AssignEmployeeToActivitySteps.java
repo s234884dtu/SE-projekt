@@ -4,6 +4,10 @@ import app.*;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Abbas
+ * Cucumber steps for assigning employees to activities.
+ */
 public class AssignEmployeeToActivitySteps {
     @When("I assign {string} to the activity {string}")
     public void iAssignToActivity(String initials, String activityName) {

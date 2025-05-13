@@ -8,6 +8,10 @@ import io.cucumber.java.en.Given;
 
 import java.time.LocalDate;
 
+/**
+ * Author: Sumayo
+ * Shared Cucumber context for employee, project, and activity setup.
+ */
 public class CommonSteps {
     public static SystemModel system = new SystemModel();
     public static Project project;

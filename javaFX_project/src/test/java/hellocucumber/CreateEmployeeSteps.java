@@ -4,6 +4,10 @@ import app.*;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Daniel
+ * Cucumber steps for creating an employee and verifying existence.
+ */
 public class CreateEmployeeSteps {
     @When("I create an employee with initials {string}")
     public void iCreateAnEmployeeWithInitials(String initials) {

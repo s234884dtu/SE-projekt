@@ -8,3 +8,10 @@ Feature: View project report
     And the employee "JD01" registers 4.0 hours on the activity "Design"
     When I view the total hours of project "ProjectX"
     Then the total hours should be 4.0
+
+  Scenario: View total hours when no hours are registered
+    Given an employee with initials "JD02"
+    And a project named "ProjectY"
+    And an activity named "Planning" in the project "ProjectY"
+    When I view the total hours of project "ProjectY"
+    Then the total hours should be 0.0

@@ -4,6 +4,10 @@ import app.*;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Abbas
+ * Cucumber steps for removing an employee from an activity.
+ */
 public class RemoveEmployeeFromActivitySteps {
     @When("I remove {string} from the activity {string}")
     public void iRemoveFromTheActivity(String initials, String activityName) {

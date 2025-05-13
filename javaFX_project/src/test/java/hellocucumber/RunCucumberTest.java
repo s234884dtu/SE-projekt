@@ -6,6 +6,10 @@ import static io.cucumber.junit.platform.engine.Constants.SNIPPET_TYPE_PROPERTY_
 
 import org.junit.platform.suite.api.*;
 
+/**
+ * Author: Sumayo
+ * Entry point for executing all Cucumber feature files via JUnit.
+ */
 @Suite
 @SuiteDisplayName("Cucumber Tests")
 @IncludeEngines("cucumber")

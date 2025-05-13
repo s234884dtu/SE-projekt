@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 
+/**
+ * Author: Daniel
+ * Cucumber steps for registering and validating absence periods.
+ */
 public class RegisterAbsenceSteps {
 
     @When("I register {word} absence for {string} from {string} to {string}")

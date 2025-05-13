@@ -5,6 +5,10 @@ import io.cucumber.java.en.*;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Abbas
+ * Cucumber steps for listing and validating available employees.
+ */
 public class ViewAvailableEmployeesSteps {
     private List<Employee> available;
 

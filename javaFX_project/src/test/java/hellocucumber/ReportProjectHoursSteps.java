@@ -4,6 +4,10 @@ import app.*;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Sumayo
+ * Cucumber steps for viewing and verifying total project work hours.
+ */
 public class ReportProjectHoursSteps {
     private double reportedHours;
 
@@ -18,6 +22,6 @@ public class ReportProjectHoursSteps {
 
     @Then("the total hours should be {double}")
     public void theTotalHoursShouldBe(double expected) {
-        assertEquals(expected, reportedHours, 0.001); // ✅ use delta for double comparison
+        assertEquals(expected, reportedHours, 0.001);
     }
 }

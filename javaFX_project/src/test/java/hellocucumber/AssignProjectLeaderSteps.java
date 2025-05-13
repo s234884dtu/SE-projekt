@@ -4,6 +4,10 @@ import app.*;
 import io.cucumber.java.en.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Author: Sumayo
+ * Cucumber steps for assigning a project leader.
+ */
 public class AssignProjectLeaderSteps {
 
     @When("{string} assigns {string} as the project leader of {string}")

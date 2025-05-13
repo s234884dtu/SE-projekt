@@ -6,6 +6,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 
+/**
+ * Author: Esther
+ * Cucumber steps for creating and verifying an activity within a project.
+ */
 public class CreateActivitySteps {
 
     @When("I add an activity named {string} with start date {string}, end date {string}, and {double} budgeted hours to {string}")

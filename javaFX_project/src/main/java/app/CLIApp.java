@@ -5,7 +5,20 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Main CLI controller
+ * Authors:
+ * - Sumayo: overall structure, project/report features, help/list/report
+ * - Esther: add-activity
+ * - Abbas: assign/remove employee
+ * - Peter: register-hours
+ * - Daniel: auth, absence, create-employee
+ */
 public class CLIApp {
+
+    /**
+     * Author: Sumayo
+     */
     public static void main(String[] args) throws Exception {
         SystemModel sys = new SystemModel();
         sys.createEmployee("huba"); // system admin
@@ -29,6 +42,9 @@ public class CLIApp {
                         System.out.println("Goodbye!");
                         return;
 
+                    /**
+                     * Author: Sumayo
+                     */
                     case "help":
                         System.out.println("""
                             Available commands:
@@ -48,11 +64,17 @@ public class CLIApp {
                             """);
                         break;
 
+                    /**
+                     * Author: Daniel
+                     */
                     case "sign-in":
                         sys.signIn(parts[1]);
                         System.out.println("Signed in as: " + sys.getSignedInUser().getInitials());
                         break;
 
+                    /**
+                     * Author: Daniel
+                     */
                     case "whoami":
                         Employee current = sys.getSignedInUser();
                         System.out.println(current == null
@@ -60,18 +82,27 @@ public class CLIApp {
                                 : "You are signed in as: " + current.getInitials());
                         break;
 
+                    /**
+                     * Author: Daniel
+                     */
                     case "create-employee":
                         requireSignIn(sys);
                         sys.createEmployee(parts[1]);
                         System.out.println("Created employee: " + parts[1]);
                         break;
 
+                    /**
+                     * Author: Sumayo
+                     */
                     case "create-project":
                         requireSignIn(sys);
                         Project createdProject = sys.createProject(parts[1]);
                         System.out.printf("Created project: %s (%s)%n", createdProject.getName(), createdProject.getId());
                         break;
 
+                    /**
+                     * Author: Sumayo
+                     */
                     case "assign-leader": {
                         requireSignIn(sys);
                         String ini = parts[1], projName = parts[2];
@@ -83,6 +114,9 @@ public class CLIApp {
                         break;
                     }
 
+                    /**
+                     * Author: Esther
+                     */
                     case "add-activity": {
                         requireSignIn(sys);
                         String actName = parts[1];
@@ -97,9 +131,10 @@ public class CLIApp {
                                 actName, projName, startDate, endDate, budgetedHours);
                         break;
                     }
-                    
-                    
 
+                    /**
+                     * Author: Abbas
+                     */
                     case "assign-employee": {
                         requireSignIn(sys);
                         String ini = parts[1], actName = parts[2], projName = parts[3];
@@ -111,6 +146,9 @@ public class CLIApp {
                         break;
                     }
 
+                    /**
+                     * Author: Abbas
+                     */
                     case "remove-employee": {
                         requireSignIn(sys);
                         String ini = parts[1], actName = parts[2], projName = parts[3];
@@ -121,6 +159,9 @@ public class CLIApp {
                         break;
                     }
 
+                    /**
+                     * Author: Peter
+                     */
                     case "register-hours": {
                         requireSignIn(sys);
                         String ini = parts[1];
@@ -132,23 +173,28 @@ public class CLIApp {
                         System.out.printf("%s logged %.1f hours on %s%n", ini, hrs, actName);
                         break;
                     }
+
+                    /**
+                     * Author: Daniel
+                     */
                     case "register-absence-period": {
                         requireSignIn(sys);
                         if (parts.length < 5) {
                             throw new IllegalArgumentException("Usage: register-absence-period <initials> <type> <start:yyyy-MM-dd> <end:yyyy-MM-dd>");
                         }
-                    
                         String ini = parts[1];
                         AbsenceType type = AbsenceType.valueOf(parts[2].toUpperCase());
                         LocalDate start = LocalDate.parse(parts[3]);
                         LocalDate end = LocalDate.parse(parts[4]);
-                    
                         Employee emp = sys.getEmployee(ini);
                         emp.registerAbsence(type, start, end);
                         System.out.printf("Registered %s absence for %s from %s to %s%n", type, ini, start, end);
                         break;
-                    }                    
+                    }
 
+                    /**
+                     * Author: Sumayo
+                     */
                     case "view-report": {
                         requireSignIn(sys);
                         String projName = parts[1];
@@ -158,8 +204,11 @@ public class CLIApp {
                         }
                         System.out.println(projectToView.generateProjectHoursReport());
                         break;
-                    }                    
+                    }
 
+                    /**
+                     * Author: Sumayo
+                     */
                     case "list-available": {
                         requireSignIn(sys);
                         List<Employee> free = sys.getAvailableEmployees();
@@ -178,6 +227,9 @@ public class CLIApp {
         }
     }
 
+    /**
+     * Author: Sumayo
+     */
     private static void requireSignIn(SystemModel sys) {
         if (sys.getSignedInUser() == null) {
             throw new IllegalStateException("You must sign in first.");

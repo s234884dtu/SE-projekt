@@ -5,6 +5,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
+/**
+ * Author: Peter
+ * Unit tests for Activity.registerHours and related methods
+ */
 class ActivityTest {
 
     private Activity activity;
@@ -48,5 +52,10 @@ class ActivityTest {
     @Test
     void registerNonHalfIncrementThrows() {
         assertThrows(IllegalArgumentException.class, () -> activity.registerHours(employee, 3.1));
+    }
+
+    @Test
+    void registerNullEmployeeFails() {
+        assertThrows(IllegalArgumentException.class, () -> activity.registerHours(null, 1.0));
     }
 }

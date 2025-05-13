@@ -5,8 +5,12 @@ hellocucumber\CreateActivitySteps.class
 hellocucumber\Hooks.class
 hellocucumber\ReportProjectHoursSteps.class
 hellocucumber\AssignEmployeeToActivitySteps.class
+app\CreateActivityTest.class
 hellocucumber\RemoveEmployeeFromActivitySteps.class
 hellocucumber\RegisterAbsenceSteps.class
+app\AssignEmployeeTest.class
+app\AbsenceTest.class
+app\AssignLeaderTest.class
 hellocucumber\CreateProjectSteps.class
 hellocucumber\AssignProjectLeaderSteps.class
 hellocucumber\CommonSteps.class
